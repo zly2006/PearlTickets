@@ -82,8 +82,8 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
 //            System.out.println("next: " + nextPos + nextVelocity);
 
             // chunkPos to temporarily store pearl and next chunkPos to check chunk loading
-            ChunkPos currChunkPos = new ChunkPos(new BlockPos(currPos));
-            ChunkPos nextChunkPos = new ChunkPos(new BlockPos(nextPos));
+            ChunkPos currChunkPos = new ChunkPos(new BlockPos((int)currPos.x, (int)currPos.y, (int)currPos.z));
+            ChunkPos nextChunkPos = new ChunkPos(new BlockPos((int)nextPos.x, (int)nextPos.y, (int)nextPos.z));
 
 //            System.out.printf("currChunkPos: (%d, %d)    realChunkPos: (%d, %d)    nextChunkPos: (%d, %d)\n",
 //                 currChunkPos.x, currChunkPos.z, realChunkPos.x, realChunkPos.z, nextChunkPos.x, nextChunkPos.z);
