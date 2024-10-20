@@ -1,6 +1,5 @@
 package pearltickets.mixins;
 
-// Minecraft
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
@@ -12,28 +11,28 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 
-// Mixin
 import net.minecraft.world.dimension.DimensionType;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-// Java
 import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
-
 @Mixin(EnderPearlEntity.class)
 public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
-    private static final ChunkTicketType<ChunkPos> ENDER_PEARL_TICKET =
-            ChunkTicketType.create("ender_pearl", Comparator.comparingLong(ChunkPos::toLong), 2);
+    private static final ChunkTicketType<ChunkPos> ENDER_PEARL_TICKET = ChunkTicketType.create("ender_pearl", Comparator.comparingLong(ChunkPos::toLong), 2);
 
+    @Unique
     private boolean sync = true;
+    @Unique
     private Vec3d realPos = null;
+    @Unique
     private Vec3d realVelocity = null;
 
-    protected EnderPearlEntityMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    EnderPearlEntityMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -106,9 +105,7 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
                 highestMotionBlockingY += worldDimension.minY();
 
                 // skip chunk loading
-                if (this.realPos.y > highestMotionBlockingY
-                        && nextPos.y > highestMotionBlockingY
-                        && nextPos.y + nextVelocity.y > highestMotionBlockingY) {
+                if (this.realPos.y > highestMotionBlockingY && nextPos.y > highestMotionBlockingY && nextPos.y + nextVelocity.y > highestMotionBlockingY) {
                     // stay put
                     serverChunkManager.addTicket(ENDER_PEARL_TICKET, currChunkPos, 2, currChunkPos);
                     this.setVelocity(Vec3d.ZERO);
